@@ -6,8 +6,13 @@ import matplotlib.pyplot as plt
 from folium.features import CustomIcon
 
 # Load the dataset from GitHub
-csv_url = "https://github.com/MEADecarb/FY24SchoolsDecarbDash/blob/main/schools24%20-%20geo%20(2).csv"
-data = pd.read_csv(csv_url)
+csv_url = "https://github.com/MEADecarb/FY24SchoolsDecarbDash/blob/main/schools24_geo.csv?raw=true"
+
+try:
+    data = pd.read_csv(csv_url, sep=None, engine='python')
+except pd.errors.ParserError as e:
+    st.error(f"Error parsing the CSV file: {e}")
+    st.stop()
 
 # Set up the Streamlit app
 st.title("Maryland Schools Decarbonization Projects")
@@ -40,7 +45,7 @@ st_folium(m, width=700, height=500)
 
 # Create a bar chart of total award amounts by project type
 st.header("Total Award Amounts by Project Type")
-data['AWARD'] = data['AWARD'].replace('[\$,]', '', regex=True).astype(float)
+data['AWARD'] = data['AWARD'].replace(r'[\$,]', '', regex=True).astype(float)
 award_by_project = data.groupby('PROJECT')['AWARD'].sum().sort_values(ascending=False)
 
 fig, ax = plt.subplots()
