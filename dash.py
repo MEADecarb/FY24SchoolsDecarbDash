@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from folium.features import CustomIcon
 
 # Load the dataset from GitHub
-csv_url = "https://raw.githubusercontent.com/your-username/FY24SchoolsDecarbDash/main/schools24_geo.csv"
+csv_url = "https://github.com/MEADecarb/FY24SchoolsDecarbDash/blob/main/schools24%20-%20geo%20(2).csv"
 data = pd.read_csv(csv_url)
 
 # Set up the Streamlit app
